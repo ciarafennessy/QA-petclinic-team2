@@ -1,9 +1,18 @@
 version: '3.8'
 services:
  nginx:
-   image: ciarafennessy/qa-petclinic-team2:spring-petclinic-nginx
    container_name: spring-petclinic-nginx
+   build: ./spring-petclinic-nginx
+   image: ciarafennessy/qa-petclinic-team2:spring-petclinic-nginx
    restart: unless-stopped
+   networks:
+   - petclinic-net
+   ports:
+     - "80:80"
+   volumes:
+   - type: bind
+     source: ./spring-petclinic-nginx/nginx.conf
+     target: /etc/nginx/nginx.conf
  frontend:
    container_name: spring-petclinic-angular
    build: ./spring-petclinic-angular
@@ -15,8 +24,8 @@ services:
      - backend
    networks:
      - petclinic-net
-   ports:
-     - "80:80"
+  # ports:
+   #  - "8080:8080"
  backend:
    build: ./spring-petclinic-rest
    image: ciarafennessy/qa-petclinic-team2:spring-petclinic-rest
