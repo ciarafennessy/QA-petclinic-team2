@@ -6,13 +6,13 @@ services:
    image: ciarafennessy/qa-petclinic-team2:spring-petclinic-nginx
    restart: unless-stopped
    networks:
-   - petclinic-net
+     -  petclinic-net
    ports:
      - "80:80"
    volumes:
-   - type: bind
-     source: ./spring-petclinic-nginx/nginx.conf
-     target: /etc/nginx/nginx.conf
+    -  type: bind
+       source: ./nginx/nginx.conf
+       target: /etc/nginx/nginx.conf
  frontend:
    container_name: spring-petclinic-angular
    build: ./spring-petclinic-angular
