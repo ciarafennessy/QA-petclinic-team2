@@ -1,14 +1,30 @@
 version: '3.8'
 services:
+ frontend:
+   container_name: spring-petclinic-angular
+   build: ./spring-petclinic-angular
+   image: ciarafennessy/qa-petclinic-team2:spring-petclinic-angular
+   deploy:
+     replicas: 1
+   depends_on:
+   - backend
+   networks:
+     - petclinic-net
+   ports:
+     - "80:80"
  backend:
    build: ./spring-petclinic-rest
-   image: maven:3.8.4-jdk-8 AS build
+   image: ciarafennessy/qa-petclinic-team2:spring-petclinic-rest
    container_name: spring-petclinic-rest
-   restart: unless-stopped
-   
+   deploy:
+     replicas: 1
+   networks:
+     - petclinic-net
+   ports:
+     - "9966:9966"
  db:
     build: ./spring-petclinic-rest/petclinic-db
-    image: mysql:5.7
+    image: ciarafennessy/qa-petclinic-team2:petclinic-db
     container_name: petclinic-db
     restart: always
     ports
@@ -32,4 +48,6 @@ services:
 # Names our volume
 volumes:
   petclinic-db:
+networks:
+  petclinic-net:
 
