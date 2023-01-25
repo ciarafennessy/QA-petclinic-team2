@@ -1,13 +1,18 @@
 version: '3.8'
 services:
+ nginx:
+   image: ciarafennessy/qa-petclinic-team2:spring-petclinic-nginx
+   container_name: spring-petclinic-nginx
+   restart: unless-stopped
  frontend:
    container_name: spring-petclinic-angular
    build: ./spring-petclinic-angular
    image: ciarafennessy/qa-petclinic-team2:spring-petclinic-angular
+   restart: unless-stopped
    deploy:
      replicas: 1
    depends_on:
-   - backend
+     - backend
    networks:
      - petclinic-net
    ports:
@@ -16,6 +21,7 @@ services:
    build: ./spring-petclinic-rest
    image: ciarafennessy/qa-petclinic-team2:spring-petclinic-rest
    container_name: spring-petclinic-rest
+   restart: unless-stopped
    deploy:
      replicas: 1
    networks:
