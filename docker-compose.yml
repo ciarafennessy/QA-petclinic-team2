@@ -27,7 +27,7 @@ services:
     image: ciarafennessy/qa-petclinic-team2:petclinic-db
     container_name: petclinic-db
     restart: always
-    ports
+    ports:
     environment:
       MYSQL_DATABASE: 'petclinic-db'
       # So you don't have to use root, but you can if you like
